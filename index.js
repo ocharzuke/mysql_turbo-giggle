@@ -47,6 +47,29 @@ async function main() {
                 customers:customers
             });
         })
+
+        app.get('/customers/create', async function (req,res) {
+            const [companies] = await connection.execute(`SELECT company_id, name FROM Companies`);
+            res.render('customers/create', {
+                companies: companies
+            })
+        })
+
+  
+
+        app.post('/customers/create', async function (req, res) {
+            const {first_name, last_name, rating, company_id} = req.body;
+            const sql = `INSERT INTO Customers (first_name, last_name, rating, company_id) VALUES (?, ?, ?, ?);`
+            const bindings = [first_name, last_name, rating, company_id];
+            // prepared statements - defence against SQL injection
+            // in case a hacker writes sql code as the first_name to hack into the system
+            // we want to tell sql to take the input literally as a string and not as sql code
+            // basically take it strictly as data and not sql code
+            await connection.execute(sql, bindings)
+
+            res.redirect('/customers'); // tells browser to go to send a URL
+        })
+
     
     app.get('/about-us', function(req, res){
         res.render('about-us')
@@ -62,7 +85,9 @@ main();
 
 // use hbs as our 'view engine'
 app.set('view engine', 'hbs')
-
+app.use(express.urlencoded({
+    extended: true // true allows forms to contain arrays and objects
+}))
 
 
 app.listen(3000, function(){
