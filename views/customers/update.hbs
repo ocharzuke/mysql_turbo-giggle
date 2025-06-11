@@ -1,37 +1,45 @@
 {{#extends "base"}}
 {{#block "content"}}
-
-<h1>Add a New Customer</h1>
+<h1>Updating Customer: {{customer.first_name}} {{customer.last_name}}</h1>
 <form method="POST">
     <div class="mb-3">
         <label>First Name</label>
-        <input type="text" class="form-control" name="first_name">
+        <input type="text" class="form-control" name="first_name" value="{{customer.first_name}}" />
     </div>
     <div class="mb-3">
         <label>Last Name</label>
-        <input type="text" class="form-control" name="last_name">
+        <input type="text" class="form-control" name="last_name" value="{{customer.last_name}}" />
     </div>
     <div class="mb-3">
         <label>Rating</label>
-        <input type="text" class="form-control" name="rating">
+        <input type="text" class="form-control" name="rating" value = "{{customer.rating}}" />
     </div>
+
     <div class="mb-3">
         <label>Company</label>
         <select name="company_id" class="form-control">
             {{#each companies}}
-            <option value="{{this.company_id}}">{{this.name}}</option>
+            <option value="{{this.company_id}}"
+            {{#eq this.company_id ../customer.company_id}}selected{{/eq}}>{{this.name}}</option>
             {{/each}}
+
         </select>
     </div>
+
     <div class = "mb-3">
         <label>Employees</label>
         <select name = "employees[]" class = "form-control" multiple>
             {{#each employees}}
-            <option value ="{{this.employee_id}}">{{this.first_name}} {{this.last_name}}</option>
+            <option value="{{this.employee_id}}"
+            {{#inArray ../currentEmployeeIDs this.employee_id}}
+            selected
+            {{/inArray}}
+            >{{this.first_name}} {{this.last_name}}</option>
             {{/each}}
         </select>
     </div>
     <input type="submit" class="btn btn-primary mt-3" />
 </form>
+
 {{/block}}
 {{/extends}}

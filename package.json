@@ -2,8 +2,20 @@
   "dependencies": {
     "dotenv": "^16.5.0",
     "express": "^5.1.0",
+    "handlebars-helpers": "^0.10.0",
     "hbs": "^4.2.0",
     "mysql2": "^3.14.1",
+    "nodemon": "^3.1.10",
     "wax-on": "^1.2.2"
-  }
+  },
+  "name": "mysql_turbo-giggle",
+  "version": "1.0.0",
+  "description": "## Using codespace To login into the database, use `mysql -u root -pmariadb -h 127.0.0.1`",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
 }
